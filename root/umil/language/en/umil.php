@@ -1,16 +1,18 @@
 <?php
 /**
-*
-* umil [English]
-*
-* @author Nathan Guse (EXreaction) http://lithiumstudios.org
-* @package phpBB3 UMIL - Unified MOD Install File
-* @version $Id: umil.php 88 2009-01-28 03:51:36Z HighwayofLife $
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-*
-*/
+ *
+ * @author Nathan Guse (EXreaction) http://lithiumstudios.org
+ * @author David Lewis (Highway of Life) highwayoflife@gmail.com
+ * @package umil
+ * @version $Id$
+ * @copyright (c) 2008 phpBB Group
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ *
+ */
 
+/**
+ * @ignore
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -82,12 +84,16 @@ $lang = array_merge($lang, array(
 	'PERMISSION_ALREADY_EXISTS'		=> 'ERROR: Permission option %s already exists.',
 	'PERMISSION_NOT_EXIST'			=> 'ERROR: Permission option %s does not exist.',
 	'PERMISSION_REMOVE'				=> 'Removing permission option: %s',
+	'PERMISSION_ROLE_ADD'			=> 'Adding new permission role: %s',
+	'PERMISSION_ROLE_UPDATE'		=> 'Updating permission role: %s',
+	'PERMISSION_ROLE_REMOVE'		=> 'Removing permission role: %s',
 	'PERMISSION_SET_GROUP'			=> 'Setting permissions for the %s group.',
 	'PERMISSION_SET_ROLE'			=> 'Setting permissions for the %s role.',
 	'PERMISSION_UNSET_GROUP'		=> 'Unsetting permissions for the %s group.',
 	'PERMISSION_UNSET_ROLE'			=> 'Unsetting permissions for the %s role.',
 
-	'ROLE_NOT_EXIST'				=> 'Role does not exist',
+	'ROLE_ALREADY_EXISTS'			=> 'Permission role already exists.',
+	'ROLE_NOT_EXIST'				=> 'Permission role does not exist',
 
 	'SUCCESS'						=> 'Success',
 
@@ -98,13 +104,15 @@ $lang = array_merge($lang, array(
 	'TABLE_COLUMN_NOT_EXIST'		=> 'ERROR: The column %2$s does not exist on table %1$s.',
 	'TABLE_COLUMN_REMOVE'			=> 'Removing the column named %2$s from table %1$s',
 	'TABLE_COLUMN_UPDATE'			=> 'Updating a column named %2$s from table %1$s',
-	'TABLE_INSERT_DATA'				=> 'Inserting rows to the %s database table.',
 	'TABLE_KEY_ADD'					=> 'Adding a key named %2$s to table %1$s',
 	'TABLE_KEY_ALREADY_EXIST'		=> 'ERROR: The index %2$s already exists on table %1$s.',
 	'TABLE_KEY_NOT_EXIST'			=> 'ERROR: The index %2$s does not exist on table %1$s.',
 	'TABLE_KEY_REMOVE'				=> 'Removing a key named %2$s from table %1$s',
 	'TABLE_NOT_EXIST'				=> 'ERROR: Database table %s does not exist.',
 	'TABLE_REMOVE'					=> 'Removing database table: %s',
+	'TABLE_ROW_INSERT_DATA'			=> 'Inserting data in the %s database table.',
+	'TABLE_ROW_REMOVE_DATA'			=> 'Removing a row from the %s database table',
+	'TABLE_ROW_UPDATE_DATA'			=> 'Updating a row in the %s database table.',
 	'TEMPLATE_CACHE_PURGE'			=> 'Refreshing the %s template',
 	'THEME_CACHE_PURGE'				=> 'Refreshing the %s theme',
 
@@ -114,7 +122,7 @@ $lang = array_merge($lang, array(
 	'UNKNOWN'						=> 'Unknown',
 	'UPDATE_MOD'					=> 'Update %s',
 	'UPDATE_MOD_CONFIRM'			=> 'Are you ready to update %s?',
-	'UPDATE_UMIL'					=> 'This version of UMIL is outdated.<br /><br />Please download the latest UMIL (Unified MOD Install Library) from: <a href="%1$s">%1$s</a>',
+	'UPDATE_UMIL'					=> 'This version of UMIL is outdated.<br /><br />Please download the latest UMIL (Unified MOD Install Library) from: <a href="%1$s" target="_blank">%1$s</a>',
 
 	'VERSIONS'						=> 'Mod Version: <strong>%1$s</strong><br />Currently Installed: <strong>%2$s</strong>',
 	'VERSION_SELECT'				=> 'Version Select',

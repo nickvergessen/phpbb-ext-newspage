@@ -4,9 +4,9 @@
  * @author Nathan Guse (EXreaction) http://lithiumstudios.org
  * @author David Lewis (Highway of Life) highwayoflife@gmail.com
  * @package umil
- * @version $Id: umil_auto.php 53 2009-01-03 22:34:27Z exreaction $
+ * @version $Id$
  * @copyright (c) 2008 phpBB Group
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  *
  */
 
@@ -39,17 +39,12 @@ if (!defined('UMIL_AUTO'))
 }
 
 /*
-* If IN_PHPBB is already defined, lets assume they already included the common.php file and are done with setup
-*
-* NOTE: If you do not setup the common.php file YOU WILL NOT BE ABLE TO USE ANY CONSTANTS!
+* Do not include common.php, the MOD author is required to include this.
 */
 if (!defined('IN_PHPBB'))
 {
-	define('IN_PHPBB', true);
-	include($phpbb_root_path . 'common.' . $phpEx);
-	$user->session_begin();
-	$auth->acl($user->data);
-	$user->setup();
+	trigger_error('UMIL doesn\'t support the missing IN_PHPBB anymore. Please visit <a href="http://www.phpbb.com/mods/umil/update/">http://www.phpbb.com/mods/umil/update</a> on how to update your UMIF files.', E_USER_ERROR);
+	exit;
 }
 
 // Add the language file if one was specified
@@ -69,6 +64,7 @@ if (isset($logo_img))
 	$template->assign_var('LOGO_IMG', $phpbb_root_path . $logo_img);
 }
 
+// Display a login box if they are not logged in
 if (!$user->data['is_registered'])
 {
 	login_box();
