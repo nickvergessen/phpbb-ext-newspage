@@ -28,21 +28,14 @@
 		</installation>
 
 		<link-group>
-			<link type="parent" lang="de" href="../install.xml">Installations-Anleitung</link>
-			<link type="parent" lang="en" href="../install.xml">Installation-Manual</link>
+			<link type="parent" lang="de" href="../update.xml">Anleitung für das Update</link>
+			<link type="parent" lang="en" href="../update.xml">Manual for the update</link>
 		</link-group>
 	</header>
 
 	<action-group>
 		<copy>
-			<file from="root/styles/subsilver2/template/newspage_body.html" to="styles/subsilver2/template/newspage_body.html" />
+			<file from="root/language/de/mods/info_acp_newspage.php" to="language/de/mods/info_acp_newspage.php" />
 		</copy>
-
-		<open src="styles/subsilver2/template/overall_header.html">
-			<edit>
-				<find><![CDATA[<a href="{U_FAQ}"><img src="{T_THEME_PATH}/images/icon_mini_faq.gif" width="12" height="13" alt="*" /> {L_FAQ}</a>]]></find>
-				<action type="after-add"><![CDATA[<a href="{U_NEWS}">&nbsp; &nbsp;<img src="{T_THEME_PATH}/images/icon_mini_faq.gif" width="12" height="13" alt="*" /> {L_NEWS}</a>]]></action>
-			</edit>
-		</open>
 	</action-group>
 </mod>
