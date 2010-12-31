@@ -1,109 +1,117 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
-<!--For security purposes, please check: http://www.phpbb.com/mods/ for the latest version of this MOD. Although MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD. No support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
+<!--NOTICE: Please open this file in your web browser. If presented with a security warning, you may safely tell it to allow the blocked content.-->
+<!--For security purposes, please check: http://www.phpbb.com/mods/ for the latest version of this MOD.\nAlthough MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD.\nNo support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
 <mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.5.xsd">
 	<header>
-		<license>http://opensource.org/licenses/gpl-license.php GNU General Public License v2</license>
-
-		<title lang="en">NV newspage</title>
-		<title lang="de">NV newspage</title>
-
-		<description lang="en">Adds a extra-page to the board where a switchable number of news are displayed.
+		<meta name="generator" content="MODX file generated with PP MODX Creator by tumba25 (online version)"/>
+		<license><![CDATA[http://opensource.org/licenses/gpl-license.php GNU General Public License v2]]></license>
+		<title lang="en"><![CDATA[NV newspage]]></title>
+		<title lang="de"><![CDATA[NV newspage]]></title>
+		<description lang="en"><![CDATA[Adds a extra-page to the board where a switchable number of news are displayed.
 The text can be shorten to a certain number of chars.
-Also the Icons can be switched of (post icons, user icons)</description>
-		<description lang="de">Fügt eine neue Seite zum Board hinzu, auf der eine einstellbare Anzahl von News angezeigt werden.
+Also the Icons can be switched of (post icons, user icons)]]></description>
+		<description lang="de"><![CDATA[Fügt eine neue Seite zum Board hinzu, auf der eine einstellbare Anzahl von News angezeigt werden.
 Der Text kann auf eine bestimmte Anzahl von Buchstaben gekürzt werden.
-Die Buttons (ändern, zitieren,... und Benutzerbuttons) können ausgeschalten werden.</description>
-
+Die Buttons (ändern, zitieren,... und Benutzerbuttons) können ausgeschalten werden.]]></description>
 		<author-group>
 			<author>
-				<realname>Joas Schilling</realname>
-				<email>nickvergessen@gmx.de</email>
-				<username>nickvergessen</username>
-				<homepage>http://www.flying-bits.org/</homepage>
+				<realname><![CDATA[Joas Schilling]]></realname>
+				<username><![CDATA[nickvergessen]]></username>
+				<homepage><![CDATA[http://www.flying-bits.org/]]></homepage>
+				<email><![CDATA[nickvergessen@gmx.de]]></email>
+				<contributions-group>
+					<contributions status="current" from="0.0.1" to="1.0.2" position="Maindeveloper"/>
+				</contributions-group>
+			</author>
+			<author>
+				<realname><![CDATA[Falk Seidel]]></realname>
+				<username><![CDATA[Unimatrix_0]]></username>
+				<contributions-group>
+					<contributions status="current" from="1.0.3" to="1.0.3"/>
+				</contributions-group>
 			</author>
 		</author-group>
-
-		<mod-version>1.0.2</mod-version>
-
+		<mod-version>1.0.3</mod-version>
 		<installation>
 			<level>easy</level>
 			<time>300</time>
-			<target-version>3.0.5</target-version>
+			<target-version>3.0.8</target-version>
 		</installation>
-
-		<link-group>
-			<link type="language" lang="de" href="contrib/de.xml">Anleitung für das deutsche Sprachpaket</link>
-			<link type="language" lang="en" href="contrib/de.xml">Manual for German Language-set</link>
-			<link type="template" lang="de" href="contrib/subsilver2.xml">Anleitung für das Style subsilver2</link>
-			<link type="template" lang="en" href="contrib/subsilver2.xml">Manual for subsilver2 Style</link>
-			<link type="parent" lang="de" href="contrib/update_1_0_1_to_1_0_2/update.xml">Anleitung für das Update von 1.0.1 zu 1.0.2</link>
-			<link type="parent" lang="en" href="contrib/update_1_0_1_to_1_0_2/update.xml">Manual for the update 1.0.1 to 1.0.2</link>
-		</link-group>
-
 		<history>
-			<entry>
-				<date>2009-07-15</date>
-				<rev-version>1.0.2</rev-version>
-				<changelog lang="en">
-					<change>MOD-Validation-Report</change>
-				</changelog>
-			</entry>
-
-			<entry>
-				<date>2009-07-02</date>
-				<rev-version>1.0.1</rev-version>
-				<changelog lang="en">
-					<change>View pagination in archive</change>
-					<change>View number of archive-entries</change>
-					<change>View number of archive-entries</change>
-				</changelog>
-			</entry>
-
-			<entry>
-				<date>2007-12-18</date>
-				<rev-version>0.1.0</rev-version>
-				<changelog lang="en">
-					<change>validated to phpBB 3.0.0</change>
-				</changelog>
-			</entry>
-
-			<entry>
-				<date>2007-10-16</date>
-				<rev-version>0.0.2</rev-version>
-				<changelog lang="en">
-					<change>cut down news-message</change>
-					<change>hide profile info</change>
-					<change>hide post buttons</change>
-					<change>subsilver2 included</change>
-				</changelog>
-			</entry>
-
 			<entry>
 				<date>2007-09-09</date>
 				<rev-version>0.0.1</rev-version>
 				<changelog lang="en">
-					<change>first version</change>
+					<change><![CDATA[first version]]></change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2007-10-16</date>
+				<rev-version>0.0.2</rev-version>
+				<changelog lang="en">
+					<change><![CDATA[cut down news-message]]></change>
+					<change><![CDATA[hide profile info]]></change>
+					<change><![CDATA[hide post buttons]]></change>
+					<change><![CDATA[subsilver2 included]]></change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2007-12-18</date>
+				<rev-version>0.1.0</rev-version>
+				<changelog lang="en">
+					<change><![CDATA[validated to phpBB 3.0.0]]></change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2009-07-02</date>
+				<rev-version>1.0.1</rev-version>
+				<changelog lang="en">
+					<change><![CDATA[View pagination in archive]]></change>
+					<change><![CDATA[View number of archive-entries]]></change>
+					<change><![CDATA[View number of archive-entries]]></change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2009-07-15</date>
+				<rev-version>1.0.2</rev-version>
+				<changelog lang="en">
+					<change><![CDATA[MOD-Validation-Report]]></change>
+				</changelog>
+			</entry>
+			<entry>
+				<date>2010-12-31</date>
+				<rev-version>1.0.3</rev-version>
+				<changelog lang="en">
+					<change><![CDATA[hide attachments]]></change>
 				</changelog>
 			</entry>
 		</history>
+		<link-group>
+			<link type="language" href="contrib/de.xml" lang="de">Anleitung für das deutsche Sprachpaket</link>
+			<link type="language" href="contrib/de.xml" lang="en">Manual for German Language-set</link>
+			<link type="template" href="contrib/subsilver2.xml" lang="de">Anleitung für das Style subsilver2</link>
+			<link type="template" href="contrib/subsilver2.xml" lang="en">Manual for subsilver2 Style</link>
+			<link type="parent" href="contrib/update_1_0_1_to_1_0_2/update.xml" lang="de">Anleitung für das Update von 1.0.1 zu 1.0.2</link>
+			<link type="parent" href="contrib/update_1_0_1_to_1_0_2/update.xml" lang="en">Manual for the update 1.0.1 to 1.0.2</link>
+			<link type="parent" href="contrib/update_1_0_2_to_1_0_3/update.xml" lang="en">Manual for the update 1.0.2 to 1.0.3</link>
+			<link type="parent" href="contrib/update_1_0_2_to_1_0_3/update.xml" lang="de">Anleitung für das Update von 1.0.2 zu 1.0.3</link>
+		</link-group>
 	</header>
-
 	<action-group>
 		<copy>
-			<file from="root/newspage.php" to="newspage.php" />
-			<file from="root/adm/mods/nv_newspage_version.php" to="adm/mods/nv_newspage_version.php" />
-			<file from="root/adm/style/acp_newspage.html" to="adm/style/acp_newspage.html" />
-			<file from="root/includes/acp/acp_newspage.php" to="includes/acp/acp_newspage.php" />
-			<file from="root/includes/acp/info/acp_newspage.php" to="includes/acp/info/acp_newspage.php" />
-			<file from="root/install/*.*" to="install/*.*" />
-			<file from="root/language/en/mods/info_acp_newspage.php" to="language/en/mods/info_acp_newspage.php" />
-			<file from="root/styles/prosilver/template/newspage_body.html" to="styles/prosilver/template/newspage_body.html" />
-			<file from="root/styles/prosilver/theme/nv_newspage.css" to="styles/prosilver/theme/nv_newspage.css" />
-			<file from="root/styles/prosilver/theme/images/icon_news.gif" to="styles/prosilver/theme/images/icon_news.gif" />
-			<file from="root/umil/*.*" to="umil/*.*" />
+			<file from="root/newspage.php" to="newspage.php"/>
+			<file from="root/adm/mods/nv_newspage_version.php" to="adm/mods/nv_newspage_version.php"/>
+			<file from="root/adm/style/acp_newspage.html" to="adm/style/acp_newspage.html"/>
+			<file from="root/includes/acp/acp_newspage.php" to="includes/acp/acp_newspage.php"/>
+			<file from="root/includes/acp/info/acp_newspage.php" to="includes/acp/info/acp_newspage.php"/>
+			<file from="root/install/*.*" to="install/*.*"/>
+			<file from="root/language/en/mods/info_acp_newspage.php" to="language/en/mods/info_acp_newspage.php"/>
+			<file from="root/styles/prosilver/template/newspage_body.html" to="styles/prosilver/template/newspage_body.html"/>
+			<file from="root/styles/prosilver/theme/nv_newspage.css" to="styles/prosilver/theme/nv_newspage.css"/>
+			<file from="root/styles/prosilver/theme/images/icon_news.gif" to="styles/prosilver/theme/images/icon_news.gif"/>
+			<file from="root/umil/*.*" to="umil/*.*"/>
 		</copy>
-
 		<open src="viewonline.php">
 			<edit>
 				<find><![CDATA[		case 'report':
@@ -118,14 +126,12 @@ Die Buttons (ändern, zitieren,... und Benutzerbuttons) können ausgeschalten we
 		break;]]></action>
 			</edit>
 		</open>
-
 		<open src="includes/constants.php">
 			<edit>
 				<find><![CDATA[// Additional constants]]></find>
 				<action type="after-add"><![CDATA[define('NEWSPAGE_FILE', 'newspage');]]></action>
 			</edit>
 		</open>
-
 		<open src="includes/functions.php">
 			<edit>
 				<find><![CDATA[// The following assigns all _common_ variables that may be used at any point in a template.]]></find>
@@ -137,48 +143,40 @@ Die Buttons (ändern, zitieren,... und Benutzerbuttons) können ausgeschalten we
 				<action type="before-add"><![CDATA['U_NEWS'				=> append_sid("{$phpbb_root_path}{$newspage_file}.$phpEx"),]]></action>
 			</edit>
 		</open>
-
 		<open src="styles/prosilver/template/overall_header.html">
 			<edit>
 				<find><![CDATA[<li class="icon-faq"><a href="{U_FAQ}" title="{L_FAQ_EXPLAIN}">{L_FAQ}</a></li>]]></find>
 				<action type="before-add"><![CDATA[<li class="icon-news"><a href="{U_NEWS}" title="{L_NEWS}">{L_NEWS}</a></li>]]></action>
 			</edit>
 		</open>
-
 		<open src="styles/prosilver/theme/bidi.css">
 			<edit>
 				<find><![CDATA[.rtl .icon-bookmark, .rtl .icon-bump, .rtl .icon-subscribe, .rtl .icon-unsubscribe, .rtl .icon-pages, .rtl .icon-search {]]></find>
 				<inline-edit>
-						<inline-find><![CDATA[, .rtl .icon-search]]></inline-find>
-						<inline-action type="after-add"><![CDATA[, .rtl .icon-news]]></inline-action>
+					<inline-find><![CDATA[, .rtl .icon-search]]></inline-find>
+					<inline-action type="after-add"><![CDATA[, .rtl .icon-news]]></inline-action>
 				</inline-edit>
-				</edit>
+			</edit>
 		</open>
-
 		<open src="styles/prosilver/theme/buttons.css">
 			<edit>
 				<find><![CDATA[.icon-bookmark, .icon-bump, .icon-subscribe, .icon-unsubscribe, .icon-pages, .icon-search {]]></find>
 				<inline-edit>
-						<inline-find><![CDATA[.icon-bookmark, .icon-bump, .icon-subscribe, .icon-unsubscribe, .icon-pages, .icon-search]]></inline-find>
-						<inline-action type="after-add"><![CDATA[, .icon-news]]></inline-action>
+					<inline-find><![CDATA[.icon-bookmark, .icon-bump, .icon-subscribe, .icon-unsubscribe, .icon-pages, .icon-search]]></inline-find>
+					<inline-action type="after-add"><![CDATA[, .icon-news]]></inline-action>
 				</inline-edit>
-				</edit>
+			</edit>
 		</open>
-
 		<open src="styles/prosilver/theme/stylesheet.css">
 			<edit>
 				<find><![CDATA[@import url("colours.css");]]></find>
 				<action type="after-add"><![CDATA[@import url("nv_newspage.css");]]></action>
 			</edit>
 		</open>
-
-		<diy-instructions lang="en">If you want me to add your language file to the download, just leave me a pm:
-http://www.phpbb.com/community/ucp.php?i=pm&amp;mode=compose&amp;u=315319
-
-Browse to install/ and run the installer</diy-instructions>
-		<diy-instructions lang="de">Wenn ihr den MOD in eine weitere Sprache übersetzt habt, schickt mir doch eine pm:
-http://www.phpbb.com/community/ucp.php?i=pm&amp;mode=compose&amp;u=315319
-
-install/ aufrufen und ausführen</diy-instructions>
+		<php-installer><![CDATA[install/index.php]]></php-installer>
+		<diy-instructions lang="en"><![CDATA[If you want me to add your language file to the download, just leave me a pm:
+http://www.phpbb.com/community/ucp.php?i=pm&mode=compose&u=315319]]></diy-instructions>
+		<diy-instructions lang="de"><![CDATA[Wenn ihr den MOD in eine weitere Sprache übersetzt habt, schickt mir doch eine pm:
+http://www.phpbb.com/community/ucp.php?i=pm&mode=compose&u=315319]]></diy-instructions>
 	</action-group>
 </mod>
