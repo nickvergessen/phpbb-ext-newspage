@@ -105,6 +105,37 @@
 						<br clear="all" />
 					<!-- ENDIF -->
 
+							<!-- IF postrow.S_HAS_POLL -->
+							<table class="tablebg" width="100%" cellspacing="1">
+							<!-- IF postrow.S_ROW_COUNT is not even --><tr class="row1"><!-- ELSE --><tr class="row2"><!-- ENDIF -->
+								<td colspan="2" align="center"><br clear="all" />
+									<table cellspacing="0" cellpadding="4" border="0" align="center">
+									<tr>
+										<td align="center"><span class="gen"><b>{postrow.POLL_QUESTION}</b></span><br /><span class="gensmall">{postrow.L_POLL_LENGTH}</span></td>
+									</tr>
+									<tr>
+										<td align="{S_CONTENT_FLOW_BEGIN}">
+											<table cellspacing="0" cellpadding="2" border="0">
+										<!-- BEGIN poll_option -->
+											<tr>
+												<td><span class="gen">{postrow.poll_option.POLL_OPTION_CAPTION}</span></td>
+													<td dir="ltr">{postrow.POLL_LEFT_CAP_IMG}{postrow.poll_option.POLL_OPTION_IMG}{postrow.POLL_RIGHT_CAP_IMG}</td>
+													<td class="gen" align="{S_CONTENT_FLOW_END}"><b>&nbsp;{postrow.poll_option.POLL_OPTION_PERCENT}&nbsp;</b></td>
+													<td class="gen" align="center">[ {postrow.poll_option.POLL_OPTION_RESULT} ]</td>
+											</tr>
+										<!-- END poll_option -->
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td class="gensmall" colspan="4" align="center"><b>{L_TOTAL_VOTES} : {TOTAL_VOTES}</b></td>
+									</tr>
+									</table>
+								</td>
+							</tr>
+							</table>
+							<!-- ENDIF -->
+
 						<div class="postbody">{postrow.MESSAGE}</div>
 
 					<!-- IF postrow.S_HAS_ATTACHMENTS -->

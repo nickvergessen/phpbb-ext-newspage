@@ -213,6 +213,7 @@ $result = $db->sql_query($sql);
 while ($row = $db->sql_fetchrow($result))
 {
 	//set some default vars
+	$poll_total = 0;
 	$post_id = $row['post_id'];
 	$poster_id = $row['poster_id'];
 	$topic_id = $row['topic_id'];
@@ -245,8 +246,68 @@ while ($row = $db->sql_fetchrow($result))
 		parse_attachments($forum_id, $message, $attachments[$row['post_id']], $update_count);
 	}
 
-	$row['post_text'] = $message;
+	//Just check for polls, if it's set so
+	if((!empty($row['poll_start']) && ($config['news_poll_show'] == 2)) || (!empty($row['poll_start']) && $config['news_poll_show'] && ($only_news)))
+	{
+		$sql_poll = 'SELECT o.*, p.bbcode_bitfield, p.bbcode_uid
+			FROM ' . POLL_OPTIONS_TABLE . ' o, ' . POSTS_TABLE . " p
+			WHERE o.topic_id = $topic_id
+				AND p.post_id = {$row['topic_first_post_id']}
+				AND p.topic_id = o.topic_id
+			ORDER BY o.poll_option_id";
+		$result_poll = $db->sql_query($sql_poll);
 
+		$poll_info = array();
+		while ($row_poll = $db->sql_fetchrow($result_poll))
+		{
+			$poll_info[] = $row_poll;
+		}
+		$db->sql_freeresult($result_poll);
+
+		$poll_total = 0;
+		foreach ($poll_info as $poll_option)
+		{
+			$poll_total += $poll_option['poll_option_total'];
+		}
+
+		if ($poll_info[0]['bbcode_bitfield'])
+		{
+			$poll_bbcode = new bbcode();
+		}
+		else
+		{
+			$poll_bbcode = false;
+		}
+
+		for ($i = 0, $size = sizeof($poll_info); $i < $size; $i++)
+		{
+			$poll_info[$i]['poll_option_text'] = censor_text($poll_info[$i]['poll_option_text']);
+
+			if ($poll_bbcode !== false)
+			{
+				$poll_bbcode->bbcode_second_pass($poll_info[$i]['poll_option_text'], $poll_info[$i]['bbcode_uid'], $poll_option['bbcode_bitfield']);
+			}
+
+			$poll_info[$i]['poll_option_text'] = bbcode_nl2br($poll_info[$i]['poll_option_text']);
+			$poll_info[$i]['poll_option_text'] = smiley_text($poll_info[$i]['poll_option_text']);
+		}
+
+		$row['poll_title'] = censor_text($row['poll_title']);
+
+		if ($poll_bbcode !== false)
+		{
+			$poll_bbcode->bbcode_second_pass($row['poll_title'], $poll_info[0]['bbcode_uid'], $poll_info[0]['bbcode_bitfield']);
+		}
+
+		$row['poll_title'] = bbcode_nl2br($row['poll_title']);
+		$row['poll_title'] = smiley_text($row['poll_title']);
+
+		unset($poll_bbcode);
+
+		$poll_end = $row['poll_length'] + $row['poll_start'];
+	}
+
+	$row['post_text'] = $message;
 	// Edit Information
 	if (($row['post_edit_count'] && $config['display_last_edited']) || $row['post_edit_reason'])
 	{
@@ -364,8 +425,19 @@ while ($row = $db->sql_fetchrow($result))
 		'U_YIM'					=> $row['user_yim'],
 		'U_AIM'					=> $row['user_aim'],
 		'U_JABBER'				=> $row['user_jabber'],
-	));
+		
+		'POLL_QUESTION'			=> $row['poll_title'],
+		'TOTAL_VOTES' 			=> $poll_total,
+		'POLL_LEFT_CAP_IMG'		=> $user->img('poll_left'),
+		'POLL_RIGHT_CAP_IMG'	=> $user->img('poll_right'),
 
+		'L_MAX_VOTES'			=> ($row['poll_max_options'] == 1) ? $user->lang['MAX_OPTION_SELECT'] : sprintf($user->lang['MAX_OPTIONS_SELECT'], $row['poll_max_options']),
+		'L_POLL_LENGTH'			=> ($row['poll_length']) ? sprintf($user->lang[($poll_end > time()) ? 'POLL_RUN_TILL' : 'POLL_ENDED_AT'], $user->format_date($poll_end)) : '',
+
+		'S_HAS_POLL'			=> ((!empty($row['poll_start']) && ($config['news_poll_show'] == 2)) || (!empty($row['poll_start']) && $config['news_poll_show'] && ($only_news))) ? true : false,
+		'S_DISPLAY_RESULTS'		=> true,
+	));
+	
 	// Display not already displayed Attachments for this post, we already parsed them. ;)
 	if (!empty($attachments[$row['post_id']]))
 	{
@@ -376,6 +448,26 @@ while ($row = $db->sql_fetchrow($result))
 			));
 		}
 	}
+	
+	if ((!empty($row['poll_start']) && ($config['news_poll_show'] == 2)) || (!empty($row['poll_start']) && $config['news_poll_show'] && ($only_news)))
+	{
+		foreach ($poll_info as $poll_option)
+		{
+			$option_pct = ($poll_total > 0) ? $poll_option['poll_option_total'] / $poll_total : 0;
+			$option_pct_txt = sprintf("%.1d%%", round($option_pct * 100));
+
+			$template->assign_block_vars('postrow.poll_option', array(
+				'POLL_OPTION_ID' 		=> $poll_option['poll_option_id'],
+				'POLL_OPTION_CAPTION' 	=> $poll_option['poll_option_text'],
+				'POLL_OPTION_RESULT' 	=> $poll_option['poll_option_total'],
+				'POLL_OPTION_PERCENT' 	=> $option_pct_txt,
+				'POLL_OPTION_PCT'		=> round($option_pct * 100),
+				'POLL_OPTION_IMG' 		=> $user->img('poll_center', $option_pct_txt, round($option_pct * 250)),
+			));
+		}
+	}
+	
+	unset($poll_end, $poll_info);
 }
 $db->sql_freeresult($result);
 

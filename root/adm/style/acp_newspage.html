@@ -41,8 +41,8 @@
 		</dl>
 		<dl>
 			<dt><label for="news_poll_show">{L_NEWS_POLL_SHOW}:</label><br /><span>{L_NEWS_POLL_SHOW_EXPLAIN}</span></dt>
-			<dd><input type="radio" class="radio" name="news_poll_show" value="2" <!-- IF NEWS_POLL_SHOW > 1 -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp; 
-				<input type="radio" class="radio" name="news_poll_show" value="1" <!-- IF NEWS_POLL_SHOW < 2 -->checked="checked"<!-- ENDIF -->/> {L_NEWS_POLL_OPTION} &nbsp; 
+			<dd><input type="radio" class="radio" name="news_poll_show" value="2" <!-- IF NEWS_POLL_SHOW == 2 -->checked="checked"<!-- ENDIF -->/> {L_YES} &nbsp; 
+				<input type="radio" class="radio" name="news_poll_show" value="1" <!-- IF NEWS_POLL_SHOW == 1 -->checked="checked"<!-- ENDIF -->/> {L_NEWS_POLL_OPTION} &nbsp; 
 				<input type="radio" class="radio" name="news_poll_show" value="0" <!-- IF not NEWS_POLL_SHOW -->checked="checked"<!-- ENDIF --> /> {L_NO}</dd>
 		</dl>
 		<p class="submit-buttons">
