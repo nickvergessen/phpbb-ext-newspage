@@ -32,6 +32,28 @@
 
 <!-- BEGIN postrow -->
 	<div id="p{postrow.POST_ID}" class="post <!-- IF postrow.S_ROW_COUNT is odd -->bg1<!-- ELSE -->bg2<!-- ENDIF --><!-- IF postrow.S_UNREAD == 1 --> unreadpost<!-- ENDIF --><!-- IF postrow.S_POST_REPORTED --> reported<!-- ENDIF --><!-- IF NEWS_USER_INFO --><!-- IF postrow.S_ONLINE --> online<!-- ENDIF --><!-- ENDIF -->">
+		<!-- IF postrow.S_HAS_POLL -->
+				<div class="inner"><span class="corners-top"><span></span></span>
+				<div class="postbody" style="width: 100%;">
+							<h2>{postrow.POLL_QUESTION}</h2>
+							<p class="author">{postrow.L_POLL_LENGTH}</p>
+							<fieldset class="polls">
+							<!-- BEGIN poll_option -->
+								<dl>
+									<dt>{postrow.poll_option.POLL_OPTION_CAPTION}</dt>
+									<!-- IF postrow.S_DISPLAY_RESULTS --><dd class="resultbar"><div class="<!-- IF postrow.poll_option.POLL_OPTION_PCT < 20 -->pollbar1<!-- ELSEIF postrow.poll_option.POLL_OPTION_PCT < 40 -->pollbar2<!-- ELSEIF postrow.poll_option.POLL_OPTION_PCT < 60 -->pollbar3<!-- ELSEIF postrow.poll_option.POLL_OPTION_PCT < 80 -->pollbar4<!-- ELSE -->pollbar5<!-- ENDIF -->" style="width:{postrow.poll_option.POLL_OPTION_PERCENT};">{postrow.poll_option.POLL_OPTION_RESULT}</div></dd>
+									<dd><!-- IF postrow.poll_option.POLL_OPTION_RESULT == 0 -->{L_NO_VOTES}<!-- ELSE -->{postrow.poll_option.POLL_OPTION_PERCENT}<!-- ENDIF --></dd><!-- ENDIF -->
+								</dl>
+							<!-- END poll_option -->
+								<dl>
+									<dt>&nbsp;</dt>
+									<dd class="resultbar">{L_TOTAL_VOTES} : {postrow.TOTAL_VOTES}</dd>
+								</dl>
+							</fieldset>
+				</div>
+				<span class="corners-bottom"><span class=" poll"></span></span></div>
+		<!-- ENDIF -->
+
 		<div class="inner"><span class="corners-top"><span></span></span>
 		<div class="postbody" <!-- IF not NEWS_USER_INFO -->style="width: 100%;"<!-- ENDIF -->>
 			<!-- IF postrow.S_IGNORE_POST -->
@@ -60,29 +82,7 @@
 					<!-- IF postrow.S_POST_REPORTED -->{REPORTED_IMG} <a href="{postrow.U_MCP_REPORT}"><strong>{L_POST_REPORTED}</strong></a><!-- ENDIF -->
 				</p>
 			<!-- ENDIF -->
-			
-			<!-- IF postrow.S_HAS_POLL -->
-				<div class="panel <!-- IF postrow.S_ROW_COUNT is odd -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
-					<div class="inner">
-						<h2>{postrow.POLL_QUESTION}</h2>
-						<p class="author">{postrow.L_POLL_LENGTH}</p>
-						<fieldset class="polls">
-						<!-- BEGIN poll_option -->
-							<dl>
-								<dt>{postrow.poll_option.POLL_OPTION_CAPTION}</dt>
-								<!-- IF postrow.S_DISPLAY_RESULTS --><dd class="resultbar"><div class="<!-- IF postrow.poll_option.POLL_OPTION_PCT < 20 -->pollbar1<!-- ELSEIF postrow.poll_option.POLL_OPTION_PCT < 40 -->pollbar2<!-- ELSEIF postrow.poll_option.POLL_OPTION_PCT < 60 -->pollbar3<!-- ELSEIF postrow.poll_option.POLL_OPTION_PCT < 80 -->pollbar4<!-- ELSE -->pollbar5<!-- ENDIF -->" style="width:{postrow.poll_option.POLL_OPTION_PERCENT};">{postrow.poll_option.POLL_OPTION_RESULT}</div></dd>
-								<dd><!-- IF postrow.poll_option.POLL_OPTION_RESULT == 0 -->{L_NO_VOTES}<!-- ELSE -->{postrow.poll_option.POLL_OPTION_PERCENT}<!-- ENDIF --></dd><!-- ENDIF -->
-							</dl>
-						<!-- END poll_option -->
-							<dl>
-								<dt>&nbsp;</dt>
-								<dd class="resultbar">{L_TOTAL_VOTES} : {postrow.TOTAL_VOTES}</dd>
-							</dl>
-						</fieldset>
-					</div>
-				</div>			
-			<!-- ENDIF -->
-			
+
 			<div class="content">{postrow.MESSAGE}</div>
 
 			<!-- IF postrow.S_HAS_ATTACHMENTS -->
@@ -162,6 +162,7 @@
 	</div>
 
 	<hr class="divider" />
+
 <!-- BEGINELSE -->
 <div class="panel">
 	<div class="inner"><span class="corners-top"><span></span></span>
