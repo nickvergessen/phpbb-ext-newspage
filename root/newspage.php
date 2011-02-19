@@ -219,7 +219,8 @@ while ($row = $db->sql_fetchrow($result))
 	//parse message for display
 	if (!$only_news)
 	{
-		$row['post_text'] = newspage_trim_bbcode_text($row['post_text'], $row['bbcode_uid'], $config['news_char_limit']);
+		$object = new bbcode_trim_message($row['post_text'], $row['bbcode_uid'], $config['news_char_limit']);
+		$object->message();
 	}
 
 	$message = $row['post_text'];

@@ -17,194 +17,163 @@ if (!defined('IN_PHPBB'))
 
 /**
 * Trims a bbcode text to a given length.
-* If it does not contain any bbcodes we make a little short cut,
-* else we fall back to some Board3-Portal-Code.
-*/
-function newspage_trim_bbcode_text($message, $bbcode_uid, $length)
-{
-	if (utf8_strlen($message) < ($length + 25))
-	{
-		return $message;
-	}
-
-	if (!$bbcode_uid)
-	{
-		return utf8_substr($message, 0, $length) . '...';
-	}
-	return get_sub_taged_string($message, $bbcode_uid, $length);
-}
-
-/**
-* The Code below is copied from Board3 Portal v1.0.6
-*
-* I don't really know, how this code works, but it does work.
-* It trims text to a given length and closes the bbcodes correctly.
-* I just added utf8-support by replacing strlen and substr with their utf8_* substitutes.
-*
-* @author avaren aka. ice http://www.phpbb.com/community/memberlist.php?mode=viewprofile&u=389575
 */
 
-function get_sub_taged_string($str, $bbuid, $maxlen)
+class bbcode_trim_message
 {
-	$sl = $str;
-	$ret = '';
-	$ntext = '';
-	$lret = '';
-	$i = 0;
-	$cnt = $maxlen;
-	$last = '';
-	$arr = array();
+	private $message			= '';
+	private $trimmed_message	= '';
+	private $bbcode_uid			= '';
+	private $append_str			= '';
+	private $length				= 0;
+	private $length_tolerance	= 0;
+	private $is_trimmed			= null;
 
-	while((utf8_strlen($ntext) < $cnt) && (utf8_strlen($sl) > 0))
+	public function __construct($message, $bbcode_uid, $length, $append_str = '...', $tolerance = 25)
 	{
-		$sr = '';
-		if (utf8_substr($sl, 0, 1) == '[')
+		$this->message			= $message;
+		$this->bbcode_uid		= $bbcode_uid;
+		$this->append_str		= $append_str;
+		$this->length			= (int) $length;
+		$this->length_tolerance	= (int) $tolerance;
+	}
+
+	/**
+	* Did we trim the message, or was it short enough?
+	*/
+	public function is_trimmed()
+	{
+		return (bool) $this->is_trimmed;
+	}
+
+	public function message()
+	{
+		if (is_null($this->is_trimmed))
 		{
-			$sr = utf8_substr($sl,0,utf8_strpos($sl,']')+1);
+			$this->is_trimmed = $this->trim();
 		}
-		/* GESCHLOSSENE HTML-TAGS BEACHTEN */
-		if (utf8_substr($sl, 0, 2) == '<!')
+
+		return ($this->is_trimmed) ? $this->trimmed_message : $this->message;
+	}
+
+	private function trim()
+	{
+		if (utf8_strlen($this->message) < ($this->length + $this->length_tolerance))
 		{
-			$sr = get_next_bbhtml_part($sl);
-			$ret .= $sr;
-		} 
-		else if (utf8_substr($sl, 0, 1) == '<')
-		{
-			$sr = utf8_substr($sl,0,utf8_strpos($sl,'>')+1);
-			$ret .= $sr;
+			return false;
 		}
-		else if (is_valid_bbtag($sr, $bbuid))
+
+		$this->is_trimmed = true;
+
+		if (!$this->bbcode_uid)
 		{
-			if ($sr[1] == '/')
+			$this->trimmed_message = utf8_substr($this->message, 0, $this->length) . $this->append_str;
+			return true;
+		}
+
+		$this->trim_action();
+		return true;
+	}
+
+	/**
+	* Helping variables
+	*/
+	private $open_bbcodes = array();
+
+	private function trim_action()
+	{
+		/**
+		* Step 1:	copy original message
+		* Step 2:	utf8_substr() to requested length
+		* Step 3:	get a list of all BBCodes that are still open
+		* Step 4:	remove links/emails/smilies that are cut, somewhere in the middle
+		* Step 5:	close the open BBCodes
+		*/
+		$this->trimmed_message = $this->message;
+		$this->trimmed_message = utf8_substr($this->message, 0, $this->length);
+
+		$last_part = $this->get_open_bbcodes($this->trimmed_message);
+
+		$this->remove_broken_links($this->trimmed_message, $last_part);
+		$this->close_bbcodes($this->trimmed_message);
+	}
+
+	private function get_open_bbcodes($message)
+	{
+		$possible_bbcodes = explode('[', $message);
+		// Skip the first one.
+		array_shift($possible_bbcodes);
+		$num_possible_bbcodes	= sizeof($possible_bbcodes);
+		$num_tested_bbcodes		= 0;
+		$start_of_last_part		= 0;
+		foreach ($possible_bbcodes as $part)
+		{
+			$num_tested_bbcodes++;
+			$exploded_parts = explode(':' . $this->bbcode_uid . ']', $part);
+			/**
+			* There should only be 1 or 2, as bbcode_uid is not supposed to be contained in the message...
+			*/
+			$num_parts = sizeof($exploded_parts);
+			if ($num_parts == 2)
 			{
-				/* entfernt das endtag aus dem tag array */
-				$tarr = array();
-				$j = 0;
-				foreach ($arr as $elem)
+				// We matched it something ;)
+				if ($exploded_parts[0][0] != '/')
 				{
-					if (strcmp($elem[1],$sr) != 0) 
+					$bbcode_tag = $exploded_parts[0];
+					// Open BBCode-tag
+					if (($equals = utf8_strpos($bbcode_tag, '=')) !== false)
 					{
-						$tarr[$j++] = $elem;
+						$bbcode_tag = utf8_substr($bbcode_tag, 0, $equals);
+					}
+					array_unshift($this->open_bbcodes, $bbcode_tag);
+				}
+				else
+				{
+					// Close BBCode-tag
+					$bbcode_tag = utf8_substr($exploded_parts[0], 1);
+					if (isset($this->open_bbcodes[0]) && ($bbcode_tag == $this->open_bbcodes[0]))
+					{
+						array_shift($this->open_bbcodes);
 					}
 				}
-				$arr = $tarr;
 			}
-			else
-			{
-				$arr[$i][0] = $sr;
-				$arr[$i++][1] = get_end_bbtag($sr, $bbuid);
-			} 
-			$ret .= $sr;
-		}
-		else
-		{
-			$sr = get_next_word($sl);
-			$ret .= $sr;
-			$ntext .= $sr;
-			$last = $sr;
-		}
-		$sl = utf8_substr($sl, utf8_strlen($sr), utf8_strlen($sl)-utf8_strlen($sr));
-	}
-	
-	$ap = '';
 
-	foreach ($arr as $elem)
-	{
-		$ap = $elem[1] . $ap;
+			if (($num_tested_bbcodes == $num_possible_bbcodes) && ($num_parts <= 2))
+			{
+				// This here is the last message part, so we need to check for smilies and links without URL-BBCode
+				$start_of_last_part = strrpos($message, array_pop($exploded_parts));
+			}
+		}
+
+		return $start_of_last_part;
 	}
 
-	$ret .= $ap;
-	$ret = trim($ret);
-	if(utf8_substr($ret, -4) == '<!--')
+	private function remove_broken_links(&$message, $last_part = 0)
 	{
-		$ret .= ' -->';
-	}
-	$ret = add_endtag($ret);
-	$ret = $ret . '...';
-	return $ret;
-}
-
-
-function get_next_bbhtml_part($str)
-{
-	$lim =  utf8_substr($str,0,utf8_strpos($str,'>')+1);
-	return utf8_substr($str,0,utf8_strpos($str, $lim, utf8_strlen($lim))+utf8_strlen($lim));
-}
-
-// Don't let them mess up the complete portal layout in cut messages and do some real AP magic
-function is_valid_bbtag($str, $bbuid)
-{
-	return (utf8_substr($str,0,1) == '[') && (utf8_strpos($str, ':'.$bbuid.']') > 0);
-}
-
-function get_end_bbtag($tag, $bbuid)
-{
-	$etag = '';
-	for($i=0;$i<utf8_strlen($tag);$i++)
-	{
-		if ($tag[$i] == '[') 
+		// This here is the last message part, so we need to check for smilies and links without URL-BBCode
+		$open_link = substr_count($message, '<!-- ', $last_part);
+		if (!(($open_link % 2) == 0))
 		{
-			$etag .= $tag[$i] . '/';
+			// We did not close all links we opened, so we cut off the message before the last open tag ;)
+			$message = utf8_substr($message, 0, utf8_strrpos($message, '<!-- '));
+			return;
 		}
-		else if (($tag[$i] == '=') || ($tag[$i] == ':'))
+
+		$open_brakets = substr_count($message, '<', $last_part);
+		$closing_brakets = substr_count($message, '>', $last_part);
+		if ($open_brakets != $closing_brakets)
 		{
-			if ($tag[1] == '*')
-			{
-				$etag .= ':m:'.$bbuid.']';
-			}
-			else if (utf8_substr($tag, 0, 6) == '[list=')
-			{
-				$etag .= ':o:'.$bbuid.']';
-			}
-			else if (utf8_substr($tag, 0, 5) == '[list')
-			{
-				$etag .= ':u:'.$bbuid.']';
-			}
-			else 
-			{
-				$etag .= ':'.$bbuid.']';
-			}
-			break;
-		} 
-		else 
-		{
-			$etag .= $tag[$i];
+			// There was an open braket for an unparsed link
+			$message = utf8_substr($message, 0, utf8_strrpos($message, '<'));
 		}
 	}
-	return $etag;
-}
 
-function get_next_word($str)
-{
-	$ret = '';
-	for($i=0;$i<utf8_strlen($str);$i++)
+	private function close_bbcodes(&$message)
 	{
-		switch ($str[$i])
+		while (!empty($this->open_bbcodes))
 		{
-			case ' ': //$ret .= ' '; break; break;
-				return $ret . ' ';
-			case '\\': 
-				if ($str[$i+1] == 'n') return $ret . '\n';
-			case '[': if ($i != 0) return $ret;
-			default: $ret .= $str[$i];
-		}    
+			$bbcode_tag = array_shift($this->open_bbcodes);
+			$message .= '[/' . $bbcode_tag . ':' . $this->bbcode_uid . ']';
+		}
 	}
-	return $ret;
-}
-
-
-/**
-* check for invalid link tag at the end of a cut string
-*/
-function add_endtag ($message = '')
-{
-	$check = (int) strripos($message, '<!-- m --><a ');
-	$check_2 = (int) strripos($message, '</a><!--');
-	
-	if(((isset($check) && $check > 0) && ($check_2 <= $check)) || ((isset($check) && $check > 0) && !isset($check_2)))
-	{
-		$message .= '</a><!-- m -->';
-	}
-	
-	return $message;
 }
