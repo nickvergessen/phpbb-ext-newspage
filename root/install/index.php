@@ -2,7 +2,6 @@
 /**
 *
 * @package - NV newspage
-* @version $Id$
 * @copyright (c) nickvergessen ( http://www.flying-bits.org/ )
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License 
 *
@@ -73,6 +72,10 @@ $versions = array(
 			array('news_cat_show', 1),
 			array('news_archive_per_year', 1),
 		),
+	),
+
+	// Version 1.0.4
+	'1.0.4'	=> array(
 	),
 );
 

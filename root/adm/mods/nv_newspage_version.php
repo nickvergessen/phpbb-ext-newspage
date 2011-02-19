@@ -1,8 +1,7 @@
 <?php
 /**
 *
-* @package acp
-* @version $Id$
+* @package - NV newspage
 * @copyright (c) nickvergessen ( http://www.flying-bits.org/ )
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -25,7 +24,7 @@ class nv_newspage_version
 			'author'	=> 'nickvergessen',
 			'title'		=> 'NV Newspage',
 			'tag'		=> 'nv_newspage',
-			'version'	=> '1.0.3',
+			'version'	=> '1.0.4',
 			'file'		=> array('www.flying-bits.org', 'updatecheck', 'nv_newspage.xml'),
 		);
 	}
