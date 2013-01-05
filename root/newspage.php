@@ -16,6 +16,7 @@ $phpEx = substr(strrchr(__FILE__, '.'), 1);
 include($phpbb_root_path . 'common.' . $phpEx);
 include($phpbb_root_path . 'includes/bbcode.' . $phpEx);
 include($phpbb_root_path . 'includes/functions_display.' . $phpEx);
+include($phpbb_root_path . 'includes/functions_newspage.' . $phpEx);
 include($phpbb_root_path . 'includes/trim_message/trim_message.' . $phpEx);
 include($phpbb_root_path . 'includes/trim_message/bbcodes.' . $phpEx);
 
@@ -37,24 +38,22 @@ $archive_start = $archive_end = 0;
 $sql_single_news = $sql_archive_news = $archive_name = '';
 $sql_show_shadow = ($config['news_shadow']) ? '' : 'AND topic_moved_id = 0';
 $attachments = $attach_list = array();
-$has_attachments = false;
+$has_attachments = $archive = false;
 
-//Allow only dates between 00_1000 & 19_2999
-if (preg_match("/[0-1][0-9]_[1-2][0-9]{3}/", $archive_var))
+if ($archive_var)
 {
-	$archive = explode('_', $archive_var);
+	$archive = newspage_check_archive_date($archive_var);
+}
 
-	//01 - 12 are posible months, due to 32-bit systems & unix-time 1970-2037 are only allowed
-	// http://en.wikipedia.org/wiki/Year_2038_problem
-	if (( 0 < $archive[0]) && ( 13 > $archive[0]) && (1970 <=  $archive[1]) && (2038 >  $archive[1]))
-	{
-		$archive_start = gmmktime(0, 0, 0, (int) $archive[0], 1, (int) $archive[1]);
-		$archive_start = $archive_start - $user->timezone;
-		$archive_end = gmmktime(0, 0, 0, (int) $archive[0] + 1, 1, (int) $archive[1]);
-		$archive_end = $archive_end - $user->timezone;
+if ($archive)
+{
+	$archive_start = gmmktime(0, 0, 0, (int) $archive[0], 1, (int) $archive[1]);
+	$archive_start = $archive_start - $user->timezone;
+	$archive_end = gmmktime(0, 0, 0, (int) $archive[0] + 1, 1, (int) $archive[1]);
+	$archive_end = $archive_end - $user->timezone;
 
-		$archive_name = sprintf($user->lang['NEWS_ARCHIVE_OF'], $user->format_date($archive_start, 'F Y'));
-		$sql_archive_news = " AND topic_time >= $archive_start AND topic_time <= $archive_end";
+	$archive_name = sprintf($user->lang['NEWS_ARCHIVE_OF'], $user->format_date($archive_start, 'F Y'));
+	$sql_archive_news = " AND topic_time >= $archive_start AND topic_time <= $archive_end";
 	}
 }
 
