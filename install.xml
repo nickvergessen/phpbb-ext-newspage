@@ -65,6 +65,7 @@ Also the Icons can be switched of (post icons, user icons)]]></description>
 				<rev-version>1.0.8</rev-version>
 				<changelog lang="en">
 					<change><![CDATA[[Change] Update MODx to version 1.2.6 (Bug: #988)]]></change>
+					<change><![CDATA[[Change] Validation of archive (Bug: #989, Patch by: Un1matr1x)]]></change>
 				</changelog>
 			</entry>
 			
@@ -186,6 +187,7 @@ Also the Icons can be switched of (post icons, user icons)]]></description>
 			<file from="root/newspage.php" to="newspage.php" />
 			<file from="root/adm/mods/nv_newspage_version.php" to="adm/mods/nv_newspage_version.php" />
 			<file from="root/adm/style/acp_newspage.html" to="adm/style/acp_newspage.html" />
+			<file from="root/includes/functions_newspage.php" to="includes/functions_newspage.php" />
 			<file from="root/includes/acp/acp_newspage.php" to="includes/acp/acp_newspage.php" />
 			<file from="root/includes/acp/info/acp_newspage.php" to="includes/acp/info/acp_newspage.php" />
 			<file from="root/includes/trim_message/bbcodes.php" to="includes/trim_message/bbcodes.php" />
