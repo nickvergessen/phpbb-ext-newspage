@@ -7,7 +7,7 @@
 *
 */
 
-namespace nickvergessen\newspage\tests\farmework;
+namespace nickvergessen\newspage\tests\framework;
 
 abstract class database_test_case extends \phpbb_database_test_case
 {
