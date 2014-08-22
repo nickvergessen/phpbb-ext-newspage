@@ -21,7 +21,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'NEWS'						=> 'Noticias',
-	'NEWS_ADD_NEW'				=> 'New',
+	'NEWS_ADD_NEW'				=> 'Nueva',
 	'NEWS_ADD_NEW_TITLE'		=> 'Añadir nueva noticia',
 	'NEWS_ARCHIVE_SHOW'			=> 'Permitir filtrar por fecha',
 	'NEWS_ARCHIVE'				=> 'Archivo',
@@ -48,7 +48,7 @@ $lang = array_merge($lang, array(
 	'NEWS_READ_FULL'			=> 'Leer noticia completa',
 	'NEWS_READ_HERE'			=> 'Aquí',
 	'NEWS_SAVED'				=> 'Los ajustes han sido guardados correctamente.',
-	'NEWS_SHADOW_SHOW'			=> 'Show moved topics',
+	'NEWS_SHADOW_SHOW'			=> 'Mostrar tema movidos',
 	'NEWS_USER_INFO'			=> 'Mostrar información del usuario',
 	'NEWS_USER_INFO_EXPLAIN'	=> 'Avatar, campos del perfil, etc.',
 
