@@ -1,0 +1,13 @@
+# .scrutinizer.yml
+filter:
+  excluded_paths:
+    - docs/*
+    - tests/*
+    - vendor/*
+
+imports:
+  - javascript
+  - php
+
+tools:
+  external_code_coverage: true
