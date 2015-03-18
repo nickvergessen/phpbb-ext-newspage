@@ -57,7 +57,7 @@ $lang = array_merge($lang, array(
 	'NO_NEWS_ARCHIVE'			=> 'Il n’y a aucune nouvelle dans cette archive.',
 	'NO_NEWS_CATEGORY'			=> 'Il n’y a aucune nouvelle dans cette catégorie.',
 
-	'NEWSPAGE'					=> '&nbsp;Nouvelles',
+	'NEWSPAGE'					=> 'Nouvelles',
 
 	'VIEW_NEWS_POSTS'			=> array(
 		0	=> 'Aucune nouvelle',
