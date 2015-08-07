@@ -33,6 +33,7 @@ $lang = array_merge($lang, array(
 	'NEWS_CAT'					=> 'الأقسام',
 	'NEWS_CAT_SHOW'				=> 'السماح بالترتيب بواسطة المنتديات',
 	'NEWS_CHAR_LIMIT'			=> 'إختصار نص الموضوع ',
+	'NEWS_CHAR_LIMIT_EXPLAIN'	=> 'عدد حروف النص , القيمة “صفر” تعني إظهار النص كاملاً.',
 	'NEWS_COMMENTS'				=> 'الردود ',
 	'NEWS_FILTER_ARCHIVE'		=> 'ترتيب التاريخ',
 	'NEWS_FILTER_BY_ARCHIVE'	=> 'الترتيب بواسطة التاريخ',
